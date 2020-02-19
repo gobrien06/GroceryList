@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Button, TextField, Typography} from '@material-ui/core';
+import axios from 'axios';
 import './List.css';
 
 function List(){
@@ -17,7 +18,7 @@ function List(){
             old.push(formValue);
             return old;
         });
-
+        sendItems();
     }
 
     const handleChange=(e)=>{
@@ -39,6 +40,7 @@ function List(){
             old.splice(i,1);
             return old;
         });
+        sendItems();
     }
 
 
@@ -56,6 +58,16 @@ function List(){
 
         return items;
     }
+
+    const sendItems=()=>{
+        axios.get('http://localhost:3002/list/', listItem)
+        .then((res) => {
+            console.log(res.data)
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+
     return(
         <div className="list">
             <Typography variant="h2"> A Minimal Grocery List </Typography>
