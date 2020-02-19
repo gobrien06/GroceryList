@@ -18,7 +18,6 @@ function List(){
             old.push(formValue);
             return old;
         });
-        sendItems();
     }
 
     const handleChange=(e)=>{
@@ -40,7 +39,6 @@ function List(){
             old.splice(i,1);
             return old;
         });
-        sendItems();
     }
 
 
@@ -55,15 +53,18 @@ function List(){
             )
         }
         //console.log("returning items soon:" + items);
-
+        sendItems();
         return items;
     }
 
+      //proxy is for development only
     const sendItems=()=>{
-        axios.get('http://localhost:3002/list/', listItem)
+        axios.post('/list/store', {listItem})
         .then((res) => {
-            console.log(res.data)
-        }).catch((error) => {
+            //console.log("request sent with items: " + listItem);
+            console.log(res)
+        })
+        .catch((error) => {
             console.log(error)
         });
     }
